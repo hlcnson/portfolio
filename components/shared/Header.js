@@ -1,57 +1,81 @@
+
 import React from 'react';
 import Link from 'next/link';
-import {Link as NextLink} from '../../routes';
-import '../../styles/main.scss';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem} from 'reactstrap';
 
-class Header extends React.Component {
-  render () {
-
-    const title = this.props.title;
-
+const BsNavLink = (props) => {
+    const {route, title} = props;
     return (
-    <React.Fragment>
-      <p> { title } </p>
-      {this.props.children}
-      <p className='custom'> styled p element </p>
-      <p className='customFromFile'> styled p element </p>
-
-      <Link href="/">
-        <a> Home </a>
-      </Link>
-
-      <Link href="/about">
-        <a> About </a>
-      </Link>
-
-      <Link href="/portfolios">
-        <a> Portfolio </a>
-      </Link>
-
-      <Link href="/blogs">
-        <a> Blog </a>
-      </Link>
-
-      <Link href="/cv">
-        <a> CV </a>
-      </Link>
-
-      <NextLink route="test/2" params={{id:'2'}}><a>Test 2</a></NextLink>
-      <NextLink route="/test/5"><a>Test 5</a></NextLink>
-
-      <style jsx>
-      {`
-        a {
-          font-size: 20px;
-        }
-        .custom {
-          font-weight:600;
-          color: #f00;
-        }
-      `}
-      </style>
-    </React.Fragment>
-    )
-  }
+        <Link href={route}>
+            <a className="port-navbar-link nav-link"> {title} </a>
+        </Link>
+    );
 }
 
-export default Header;
+const Login = (props) => {
+    return (
+        <span className='nav-link port-navbar-link clickable'>Login</span>
+    );
+}
+
+const Logout = (props) => {
+    return (
+        <span className='nav-link port-navbar-link clickable'>Logout</span>
+    );
+}
+
+export default class Example extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+        isOpen: false
+        };
+    }
+
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <Navbar className="port-navbar port-default absolute" color="transparent" dark expand="md">
+                    <NavbarBrand className="port-navbar-brand" href="/">Hán Thanh</NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                        <Nav className="ml-auto" navbar>
+                            <NavItem className="port-navbar-item">
+                                <BsNavLink route='/' title='Trang chủ'></BsNavLink>
+                            </NavItem>
+                            <NavItem className="port-navbar-item">
+                                <BsNavLink route='/about' title='Giới thiệu'></BsNavLink>
+                            </NavItem>
+                            <NavItem className="port-navbar-item">
+                                <BsNavLink route='/portfolios' title='Portfolio'></BsNavLink>
+                            </NavItem>
+                            <NavItem className="port-navbar-item">
+                                <BsNavLink route='/cv' title='Hồ sơ'></BsNavLink>
+                            </NavItem>
+                            <NavItem className="port-navbar-item">
+                                <Login></Login>
+                            </NavItem>
+                            <NavItem className="port-navbar-item">
+                                <Logout></Logout>
+                            </NavItem>
+                        </Nav>
+                    </Collapse>
+                </Navbar>
+            </div>
+        );
+  }
+}

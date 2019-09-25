@@ -1,12 +1,15 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
+import BasePage from '../components/BasePage';
 
 class Blogs extends React.Component {
   render () {
     return (
-      <BaseLayout>
-      <h1>Blogs</h1>
-      </BaseLayout>
+        <BaseLayout>
+            <BasePage>
+                <h1>This is the Blog Page </h1>
+            </BasePage>
+        </BaseLayout>
     )
   }
 }

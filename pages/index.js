@@ -1,69 +1,71 @@
-import React from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
-import axios from 'axios';
+import React from "react";
+import Typed from 'react-typed';
+import BaseLayout from "../components/layouts/BaseLayout";
+import { Container, Row, Col, Button } from "reactstrap";
 
-import SuperComponent from '../components/SuperComponent';
-
-class Index extends SuperComponent {
-
-  static async getInitialProps() {
-    // gets asyncronous data from a remote server before rendering anything.
-    let userData = {};
-
-    try {
-      const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-      userData = response.data;
-      console.log(response.data);
-    } catch(err) {
-      console.error(err);
+class Index extends React.Component {
+    constructor(props) {
+        super(props)
+        // Tạo thuộc tính cho class
+        this.roles = ['Developer', 'Tech Lover', 'Team Player', 'Course Creator', 'React.js', 'Lập trình viên']
     }
-
-    return{initialData: [1,2,3,4], userData};
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      title: 'I am Index Page'
-    }
-  }
-
-  componentDidMount() {
-    console.log('componentDidMount');
-  }
-
-  componentDidUpdate () {
-    console.log ('componentDidUpdate');
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-  }
-
-  updateTitle = () => {
-    // alternatively one can use in the constructor:
-    // this.updateTitle = this.updateTitle.bind(this);
-    // binds the context of the index class to updateTitle, so the "this" reference does not change when used in a different context (when changing states)
-    this.setState({title: 'I am Updated Index Page'});
-  }
-
-  render () {
-    const { title } = this.state;
-    const { userData, initialData } = this.props;
-    // is equal to
-    // const title = this.state.title;
-    // this is called "Destructuring"
-
-    console.log('render');
-    return (
-      <BaseLayout>
-      <h1>This is the Index Page from Class Component</h1>
-      <h2>{ title }</h2>
-      <h2>{ userData.title }</h2>
-      <button onClick={this.updateTitle}> Change Title </button>
-      </BaseLayout>
-    )
+    render() {
+        return (
+            // Thuộc tính className và phần tử div con trực tiếp
+            // của phần tử BaseLayout sẽ được đặt vào đối tượng props
+            // của component BaseLayout
+            <BaseLayout className="cover">
+                <div className="main-section">
+                    <div className="background-image">
+                        <img src="/static/images/background-index.png" />
+                    </div>
+                    <Container>
+                        <Row>
+                            <Col md="6">
+                                <div className="hero-section">
+                                    <div className={`flipper`}>
+                                        <div className="back">
+                                            <div className="hero-section-content">
+                                                <h2> Full Stack Web Developer </h2>
+                                                <div className="hero-section-content-intro">
+                                                Have a look at my portfolio and job history.
+                                                </div>
+                                            </div>
+                                            <img className="image" src="/static/images/section-1.png"/>
+                                            <div className="shadow-custom">
+                                                <div className="shadow-inner"> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col md="6" className="hero-welcome-wrapper">
+                                <div className="hero-welcome-text">
+                                    <h1>
+                                        Welcome to the portfolio website of Filip Jerga. Get
+                                        informed, collaborate and discover projects I was working on
+                                        through the years!
+                                    </h1>
+                                    <Typed
+                                        loop
+                                        typeSpeed={60}
+                                        backSpeed={60}
+                                        strings={this.roles}
+                                        loopCount={0}
+                                        showCursor
+                                        cursorChar="|"
+                                        className="self-typed"
+                                    />
+                                </div>
+                                <div className="hero-welcome-bio">
+                                    <h1>Let's take a look on my work.</h1>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            </BaseLayout>
+        );
   }
 }
 
